@@ -1,0 +1,40 @@
+name: Auto Versioning
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: create-auto-versions
+  cancel-in-progress: true
+
+env:
+  CI: true
+  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  NODE_ENV: test
+  TZ: CET
+
+jobs:
+  release:
+    name: NewRelease
+    runs-on: [ ubuntu-latest ]
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
+        with:
+          publish: pnpm changeset tag

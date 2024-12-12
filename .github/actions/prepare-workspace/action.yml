@@ -1,0 +1,22 @@
+name: 'Prepare workspace'
+description: 'Prepares workspace for build'
+
+inputs:
+  nodeVersion:
+    description: 'Node version to use'
+    required: false
+    default: 20
+
+runs:
+  using: 'composite'
+  steps:
+    - uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.nodeVersion }}
+        cache: 'pnpm'
+    - name: Install dependencies
+      run: pnpm install
+    - name: Build
+      run: pnpm build
