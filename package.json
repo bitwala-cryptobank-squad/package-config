@@ -3,6 +3,11 @@
   "version": "0.3.0",
   "license": "MIT",
   "description": "ESLint preset for Bitwala",
+  "scripts": {
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset tag"
+  },
   "files": [
     "base.js",
     "react.js",
@@ -27,6 +32,9 @@
     "eslint-plugin-react-hooks": "5.1.0",
     "prettier": "3.4.2",
     "typescript": "5.7.2"
+  },
+  "devDependencies": {
+    "@changesets/cli": "2.27.9"
   },
   "peerDependencies": {
     "eslint": "^8.0.0",
